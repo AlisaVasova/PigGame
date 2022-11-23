@@ -6,69 +6,57 @@ from player import AIPlayer
 
 class PigGame:
 
-    """This is the PigGame class"""
-
     def __init__(self):
-        self.win_score = 100
+        self.win_score = self.__ask_win_score()
         self.__turn_score = 0
         self.__die = Dice()
         self.__player_list = self.__make_players()
         self.__roll_counter = 0
-        self.__computer = AIPlayer()
 
-    def num_players(self):
-        """This function asks for the number of players"""
-        num = input("Enter the number of players: ")
+    def __ask_win_score(self):
+        num = input("Введите количество очков, необходимое для выигрыша: ")
         return int(num)
 
-    def ask_single_player(self):
-        """Asks if the player would like to play against the computer"""
-        ans = input("Would you like to play with the computer? (y/n): ")
-        return ans
+    def __num_players(self):
+        num = input("Введите количество игроков: ")
+        return int(num)
 
     def __make_players(self):
-        """Organizes the players so they get their order to play"""
         player_list = []
-        players = self.num_players()
+        players = self.__num_players()
         if players >= 2:
             for i in range(0, players):
-                names = input("Enter name of player {} : ".format(i + 1))
-                player_person = Player((names), self.__die.roll_die())
+                names = input("Введите имя игрока {}: ".format(i + 1))
+                self.__die.roll_die()
+                player_person = Player((names), self.__die.num_roll)
                 player_list.append(player_person)
-                player_list = sorted(
-                    player_list, key=lambda order_num: order_num.order
-                )
         else:
             # set game for the computer
-            names = input("Enter name of player: ")
-            player_person = Player((names), self.__die.roll_die())
+            names = input("Введите имя игрока: ")
+            self.__die.roll_die()
+            player_person = Player((names), self.__die.num_roll)
             player_list.append(player_person)
-            player_list = sorted(
-                player_list, key=lambda order_num: order_num.order
-            )
-            self._computer = AIPlayer(self.__die.roll_die())
-            player_list.append(self._computer)
-            player_list = sorted(
-                player_list, key=lambda order_num: order_num.order
-            )
+            self.__die.roll_die()
+            computer = AIPlayer(self.__die.num_roll)
+            player_list.append(computer)
+        player_list = self.__order_players(player_list)
+        for i in player_list:
+            print(i.name)
         return player_list
 
-    def print_order_players(self):
-        """prints the order of the players"""
-        for i in self.__player_list:
-            print(i.name)
+    def __order_players(self, player_list):
+        return sorted(player_list, key=lambda order_num: order_num.order)
 
-    def hold_turn(self):
+    def __hold_turn(self):
         """asks if the player would like to hold"""
         ask_again = True
         while ask_again is True:
-            decision = input("Do you wish to hold? (y/n): ")
+            decision = input("Хотите забрать очки? (y/n): ")
             if decision == 'y' or decision == 'n':
                 ask_again = False
         return decision
 
     def run_game(self):
-        """loop that runs the game"""
         player_score = 0
         while player_score < self.win_score:
             for i in self.__player_list:
@@ -79,20 +67,17 @@ class PigGame:
                     self.seperation_bar()
                     self.__die.roll_die()
                     num = self.__die.num_roll
-                    # print the dice roll
-                    print(i.print_name() + " rolls a " + str(num))
-                    # add the number of rolls per turn
+                    print(i.name + " выбрасывает: " + str(num))
                     self.__roll_counter += 1
-                    # display the total score
                     print(
-                        "Player's total score of "
-                        + i.print_name()
-                        + " is "
+                        "Общее количество очков игрока "
+                        + i.name
+                        + " равно "
                         + str(i.score)
                     )
                     print(
-                        i.print_name()
-                        + "'s number of rolls: "
+                        i.name
+                        + " сделала ходов: "
                         + str(self.__roll_counter)
                     )
                     if num != 1:
@@ -100,36 +85,34 @@ class PigGame:
                         self.__turn_score += num
                         # print turn score
                         print(
-                            i.print_name()
-                            + "'s turn score: "
+                            i.name
+                            + " может забрать очков: "
                             + str(self.__turn_score)
                         )
                     else:
                         self.__turn_score = 0
                         print(
-                            i.print_name()
-                            + "'s turn score: "
+                            i.name
+                            + " может забрать очков: "
                             + str(self.__turn_score)
                         )
-                        print(i.print_name() + " rolled a 0!")
-                        time.sleep(2)
+                        print(i.name + " теряет очки!")
+                        time.sleep(1)
                         break
-                    time.sleep(2)
+                    time.sleep(1)
                     # Choosing to roll or hold
-                    if i.print_name() == self.__computer.get_ai_name():
-                        ans = self._computer.roll_again(
-                            i, self.__turn_score, self.__roll_counter
-                        )
+                    if isinstance(i, AIPlayer):
+                        ans = i.roll_again(self.__turn_score, self.__roll_counter, self.win_score)
                         if ans is False:
                             turn = 'y'
                             player_score = i.score
                     else:
-                        turn = self.hold_turn()
+                        turn = self.__hold_turn()
                         if turn == 'y':
-                            i.score += self.__turn_score
+                            i.point_counter(self.__turn_score)
                             player_score = i.score
                 if i.score >= self.win_score:
-                    winner_name = i.print_name()
+                    winner_name = i.name
                     player_score = i.score
                     break
         self.print_winner(winner_name, player_score)
@@ -141,5 +124,5 @@ class PigGame:
     def print_winner(cls, winner, score):
         """prints who the winner is"""
         print('*************************************')
-        print("The winner is " + winner + " with " + str(score))
+        print("Победителем становится " + winner + " с числом очков: " + str(score))
         print('*************************************')
