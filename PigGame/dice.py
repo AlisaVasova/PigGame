@@ -1,20 +1,4 @@
-# Vincent Lee
-# CPSC 386-01
-# 2021-10-13
-# lee.v3798@csu.fullerton.edu
-# @vlee20
-#
-# Lab 01-00
-#
-# This file contains the elements needed for the die
-#
-
-"""This module is for the Die class"""
-
 from random import randint
-
-"""This is the Die class"""
-
 
 class Dice:
 

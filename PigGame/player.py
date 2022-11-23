@@ -1,25 +1,10 @@
-# Vincent Lee
-# CPSC 386-01
-# 2021-10-13
-# lee.v3798@csu.fullerton.edu
-# @vlee20
-#
-# Lab 01-00
-#
-# This file contains the elements needed for the players
-#
-
-"""This module is for the Player class"""
-
 from random import randint
 
 
 class Player:
 
-    """This is the Player class"""
-
     def __init__(self, name, order):
-        self._name = name
+        self.__name = name
         self.order = order
         self.joined_game()
         self.score = 0
@@ -31,11 +16,9 @@ class Player:
         )
 
     def print_name(self):
-        """This function prints out the name"""
-        return self._name
+        return self.__name
 
     def point_counter(self, points):
-        """This function addes the turn points to the total points"""
         self.score += points
 
     def __repr__(self):

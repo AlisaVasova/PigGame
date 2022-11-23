@@ -23,11 +23,11 @@ class PigGame:
 
     def __init__(self):
         self.win_score = 100
-        self._turn_score = 0
-        self._die = Dice()
-        self._player_list = self._make_players()
-        self._roll_counter = 0
-        self._computer = AIPlayer()
+        self.__turn_score = 0
+        self.__die = Dice()
+        self.__player_list = self._make_players()
+        self.__roll_counter = 0
+        self.__computer = AIPlayer()
 
     def num_players(self):
         """This function asks for the number of players"""
@@ -39,14 +39,14 @@ class PigGame:
         ans = input("Would you like to play with the computer? (y/n): ")
         return ans
 
-    def _make_players(self):
+    def __make_players(self):
         """Organizes the players so they get their order to play"""
         player_list = []
         players = self.num_players()
         if players >= 2:
             for i in range(0, players):
                 names = input("Enter name of player {} : ".format(i + 1))
-                player_person = Player((names), self._die.roll_die())
+                player_person = Player((names), self.__die.roll_die())
                 player_list.append(player_person)
                 player_list = sorted(
                     player_list, key=lambda order_num: order_num.order
@@ -54,12 +54,12 @@ class PigGame:
         else:
             # set game for the computer
             names = input("Enter name of player: ")
-            player_person = Player((names), self._die.roll_die())
+            player_person = Player((names), self.__die.roll_die())
             player_list.append(player_person)
             player_list = sorted(
                 player_list, key=lambda order_num: order_num.order
             )
-            self._computer = AIPlayer(self._die.roll_die())
+            self._computer = AIPlayer(self.__die.roll_die())
             player_list.append(self._computer)
             player_list = sorted(
                 player_list, key=lambda order_num: order_num.order
@@ -68,7 +68,7 @@ class PigGame:
 
     def print_order_players(self):
         """prints the order of the players"""
-        for i in self._player_list:
+        for i in self.__player_list:
             print(i.name)
 
     def hold_turn(self):
@@ -84,10 +84,10 @@ class PigGame:
         """loop that runs the game"""
         player_score = 0
         while player_score < self.win_score:
-            for i in self._player_list:
+            for i in self.__player_list:
                 turn = 'n'
-                self._roll_counter = 0
-                self._turn_score = 0
+                self.__roll_counter = 0
+                self.__turn_score = 0
                 while turn == 'n':
                     self.seperation_bar()
                     self._die.roll_die()
@@ -106,19 +106,19 @@ class PigGame:
                     print(
                         i.print_name()
                         + "'s number of rolls: "
-                        + str(self._roll_counter)
+                        + str(self.__roll_counter)
                     )
                     if num != 1:
                         # gets total points of the turn
-                        self._turn_score += num
+                        self.__turn_score += num
                         # print turn score
                         print(
                             i.print_name()
                             + "'s turn score: "
-                            + str(self._turn_score)
+                            + str(self.__turn_score)
                         )
                     else:
-                        self._turn_score = 0
+                        self.__turn_score = 0
                         print(
                             i.print_name()
                             + "'s turn score: "
@@ -129,9 +129,9 @@ class PigGame:
                         break
                     time.sleep(2)
                     # Choosing to roll or hold
-                    if i.print_name() == self._computer.get_ai_name():
+                    if i.print_name() == self.__computer.get_ai_name():
                         ans = self._computer.roll_again(
-                            i, self._turn_score, self._roll_counter
+                            i, self.__turn_score, self.__roll_counter
                         )
                         if ans is False:
                             turn = 'y'
@@ -147,29 +147,12 @@ class PigGame:
                     break
         self.print_winner(winner_name, player_score)
 
-    @classmethod
-    def seperation_bar(cls):
+    def seperation_bar():
         """creates a seperation line for visualization"""
         print('-------------------------------------')
 
-    @classmethod
-    def print_winner(cls, winner, score):
+    def print_winner(winner, score):
         """prints who the winner is"""
         print('*************************************')
         print("The winner is " + winner + " with " + str(score))
         print('*************************************')
-
-    def run(self):
-        """returns 1 that the game is still running"""
-        print('Game is running')
-        return 1
-
-    def exit(self):
-        """lets the players know the game is exiting"""
-        self.seperation_bar()
-        print('Game is exiting')
-
-    @classmethod
-    def exit_code(cls):
-        """returns 0 that the game has exited the system"""
-        return 0
