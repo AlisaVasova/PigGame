@@ -25,7 +25,7 @@ class AIPlayer(Player):
         if self.aggressiveness == 1:
             if turn_score <= 12:
                 decision = True
-                if self.__more_than_win_score(self.score, turn_score, win_score):
+                if self.__more_than_win_score(turn_score, win_score):
                     self.point_counter(turn_score)
                     decision = False
             else:
@@ -34,7 +34,7 @@ class AIPlayer(Player):
         if self.aggressiveness == 2:
             if (turn_score <= 16) and (roll_counter <= 3):
                 decision = True
-                if self.__more_than_win_score(self.score, turn_score, win_score):
+                if self.__more_than_win_score(turn_score, win_score):
                     self.point_counter(turn_score)
                     decision = False
             else:
@@ -43,7 +43,7 @@ class AIPlayer(Player):
         if self.aggressiveness == 3:
             if (turn_score <= 20) and (roll_counter <= 5):
                 decision = True
-                if self.__more_than_win_score(self.score, turn_score, win_score):
+                if self.__more_than_win_score(turn_score, win_score):
                     self.point_counter(turn_score)
                     decision = False
             else:
@@ -51,8 +51,8 @@ class AIPlayer(Player):
                 decision = False
         return decision
 
-    def __more_than_win_score(self, score, add_score, win_score):
-        if (self.score + turn_score) >= win_score:
+    def __more_than_win_score(self, add_score, win_score):
+        if (self.score + add_score) >= win_score:
             return True
         else:
             return False
