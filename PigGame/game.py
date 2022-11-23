@@ -1,16 +1,3 @@
-# Vincent Lee
-# CPSC 386-01
-# 2021-10-13
-# lee.v3798@csu.fullerton.edu
-# @vlee20
-#
-# Lab 01-00
-#
-# This program has the functions that make up the game 'pig'
-#
-
-"""This module is for the PigGame class"""
-
 import time
 from dice import Dice
 from player import Player
