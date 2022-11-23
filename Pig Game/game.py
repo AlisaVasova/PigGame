@@ -115,14 +115,13 @@ class PigGame:
                     winner_name = i.name
                     player_score = i.score
                     break
-        self.print_winner(winner_name, player_score)
 
-    def seperation_bar(cls):
+        print('*************************************')
+        print("Победителем становится " + winner_name + " с числом очков: " + str(player_score))
+        print('*************************************')
+
+    def seperation_bar(self):
         """creates a seperation line for visualization"""
         print('-------------------------------------')
 
-    def print_winner(cls, winner, score):
-        """prints who the winner is"""
-        print('*************************************')
-        print("Победителем становится " + winner + " с числом очков: " + str(score))
-        print('*************************************')
+        
