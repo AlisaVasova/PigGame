@@ -12,7 +12,7 @@ class Player:
     def joined_game(self):
         """This function prints out that the player joined and rolled a die"""
         print(
-            self._name + " has joined the game and rolled a: " + str(self.order)
+            self.__name + " has joined the game and rolled a: " + str(self.order)
         )
 
     def print_name(self):

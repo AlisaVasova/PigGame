@@ -12,7 +12,7 @@ class PigGame:
         self.win_score = 100
         self.__turn_score = 0
         self.__die = Dice()
-        self.__player_list = self._make_players()
+        self.__player_list = self.__make_players()
         self.__roll_counter = 0
         self.__computer = AIPlayer()
 
@@ -77,12 +77,12 @@ class PigGame:
                 self.__turn_score = 0
                 while turn == 'n':
                     self.seperation_bar()
-                    self._die.roll_die()
-                    num = self._die.num_roll
+                    self.__die.roll_die()
+                    num = self.__die.num_roll
                     # print the dice roll
                     print(i.print_name() + " rolls a " + str(num))
                     # add the number of rolls per turn
-                    self._roll_counter += 1
+                    self.__roll_counter += 1
                     # display the total score
                     print(
                         "Player's total score of "
@@ -109,7 +109,7 @@ class PigGame:
                         print(
                             i.print_name()
                             + "'s turn score: "
-                            + str(self._turn_score)
+                            + str(self.__turn_score)
                         )
                         print(i.print_name() + " rolled a 0!")
                         time.sleep(2)
@@ -126,7 +126,7 @@ class PigGame:
                     else:
                         turn = self.hold_turn()
                         if turn == 'y':
-                            i.score += self._turn_score
+                            i.score += self.__turn_score
                             player_score = i.score
                 if i.score >= self.win_score:
                     winner_name = i.print_name()
@@ -134,11 +134,11 @@ class PigGame:
                     break
         self.print_winner(winner_name, player_score)
 
-    def seperation_bar():
+    def seperation_bar(cls):
         """creates a seperation line for visualization"""
         print('-------------------------------------')
 
-    def print_winner(winner, score):
+    def print_winner(cls, winner, score):
         """prints who the winner is"""
         print('*************************************')
         print("The winner is " + winner + " with " + str(score))
