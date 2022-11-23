@@ -170,17 +170,6 @@ class PigGame:
         print('Game is exiting')
 
     @classmethod
-    def loading(cls):
-        """lets the players know the game is loading"""
-        print('Game is loading')
-        time.sleep(2)
-
-    @classmethod
-    def loaded(cls):
-        """lets the players know the game has loaded"""
-        print('Game has loaded')
-
-    @classmethod
     def exit_code(cls):
         """returns 0 that the game has exited the system"""
         return 0

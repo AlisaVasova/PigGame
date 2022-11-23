@@ -19,8 +19,6 @@ from game import PigGame
 def main():
     """This main starts the loop for the game to start"""
     game = PigGame()
-    game.loading()
-    game.loaded()
     game.run()
     game.run_game()
 
