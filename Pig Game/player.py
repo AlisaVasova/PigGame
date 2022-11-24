@@ -47,3 +47,4 @@ class AIPlayer(Player):
             else:
                 return False
         return None
+

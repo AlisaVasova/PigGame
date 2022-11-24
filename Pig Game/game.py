@@ -3,15 +3,14 @@ from dice import Dice
 from player import Player
 from player import AIPlayer
 
-
 class PigGame:
 
     def __init__(self):
         self.win_score = self.__ask_win_score()
-        self.__turn_score = 0
-        self.__die = Dice()
-        self.__player_list = self._make_players()
-        self.__roll_counter = 0
+        self.turn_score = 0
+        self.die = Dice()
+        self.player_list = self._make_players()
+        self.roll_counter = 0
 
     def __ask_win_score(self):
         print("Введите количество очков, необходимое для выигрыша: ", end='')
@@ -30,18 +29,18 @@ class PigGame:
             for i in range(0, players):
                 print("Введите имя игрока {}: ".format(i + 1), end='')
                 names = input()
-                self.__die.roll_die()
-                player_person = Player((names), self.__die.num_roll)
+                self.die.roll_die()
+                player_person = Player((names), self.die.num_roll)
                 player_list.append(player_person)
         else:
             # set game for the computer
             print("Введите имя игрока: ", end='')
             names = input()
-            self.__die.roll_die()
-            player_person = Player((names), self.__die.num_roll)
+            self.die.roll_die()
+            player_person = Player((names), self.die.num_roll)
             player_list.append(player_person)
-            self.__die.roll_die()
-            computer = AIPlayer(self.__die.num_roll)
+            self.die.roll_die()
+            computer = AIPlayer(self.die.num_roll)
             player_list.append(computer)
         player_list = self.__order_players(player_list)
         print("Порядок хода:")
@@ -67,49 +66,49 @@ class PigGame:
     def run_game(self):
         player_score = 0
         while player_score < self.win_score:
-            for i in self.__player_list:
+            for i in self.player_list:
                 turn = 'n'
-                self.__roll_counter = 0
-                self.__turn_score = 0
+                self.roll_counter = 0
+                self.turn_score = 0
                 while turn == 'n':
                     self.seperation_bar()       
                     print("Ход игрока " + i.name)
-                    self.__die.roll_die()
-                    num = self.__die.num_roll
+                    self.die.roll_die()
+                    num = self.die.num_roll
                     print(i.name + " выбрасывает: " + str(num))
-                    self.__roll_counter += 1
+                    self.roll_counter += 1
                     print(
                         "Общее количество очков: "
                         + str(i.score)
                     )
                     print(
                         "Сделано ходов: "
-                        + str(self.__roll_counter)
+                        + str(self.roll_counter)
                     )
                     if num != 1:
                         # gets total points of the turn
-                        self.__turn_score += num
+                        self.turn_score += num
                         # print turn score
                         print(
                             "Можно забрать очков: "
-                            + str(self.__turn_score)
+                            + str(self.turn_score)
                         )
                     else:
-                        self.__turn_score = 0
+                        self.turn_score = 0
                         print(i.name + "Вы теряете набранные очки!")
                         time.sleep(1)
                         break
                     time.sleep(1)
                     # Choosing to roll or hold
                     if isinstance(i, AIPlayer):
-                        ans = i.roll_again(self.__turn_score, self.__roll_counter, self.win_score)
+                        ans = i.roll_again(self.turn_score, self.roll_counter, self.win_score)
                         if ans is False:
                             turn = 'y'
                             player_score = i.score
                     else:
                         turn = self.__hold_turn()
                         if turn == 'y':
-                            i.point_counter(self.__turn_score)
+                            i.point_counter(self.turn_score)
                             player_score = i.score
                 if i.score >= self.win_score:
                     winner_name = i.name
@@ -123,5 +122,4 @@ class PigGame:
     def seperation_bar(self):
         """creates a seperation line for visualization"""
         print('-------------------------------------')
-
         
