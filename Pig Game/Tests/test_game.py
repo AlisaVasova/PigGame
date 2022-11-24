@@ -150,7 +150,7 @@ def test_game_players_with_1():
             game = PigGame()
 
     with patch('dice.Dice.roll_die', side_effect=[2, 2, 5, 1, 6]):
-        with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "y", "y"]):
+        with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "n", "y"]):
             winner, score = game.run_game()
-            assert winner == "Alice"
+            assert winner == "Bob"
             assert score == 10
