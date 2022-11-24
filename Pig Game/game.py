@@ -61,17 +61,19 @@ class PigGame:
         return player_list
 
     def __order_players(self, player_list):
-        return sorted(player_list, key=lambda order_num: order_num.order)
+        if player_list:
+            return sorted(player_list, key=lambda order_num: order_num.order)
+        else:
+            return None
 
     def __hold_turn(self):
-        """asks if the player would like to hold"""
-        ask_again = True
-        while ask_again is True:
+        while True:
             print("Хотите забрать очки? (y/n): ", end='')
             decision = input()
             if decision == 'y' or decision == 'n':
-                ask_again = False
-        return decision
+                return decision
+            else:
+                print("Ошибка ввода. Попробуйте еще раз.")
 
     def run_game(self):
         player_score = 0

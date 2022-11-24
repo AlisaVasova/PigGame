@@ -70,4 +70,22 @@ def test_make_players():
         with patch('dice.Dice.roll_die', side_effect=[4, 2]):
             with MockInputFunction(side_effect=["Alice", "Bob"]):
                 with patch('game.PigGame._PigGame__order_players', side_effect=[[pl2, pl1]]):
-                    assert game.public_make_players == [pl2, pl1]
+                    assert game.public_make_players() == [pl2, pl1]
+
+def test_order_players():
+    pl1 = Player("Alice", 4)
+    pl2 = Player("Bob", 2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
+        with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
+            game = PigGameTest()
+
+    assert game._PigGame__order_players([pl1,pl2]) == [pl2, pl1]
+
+def test_order_players_negativ():
+    pl1 = Player("Alice", 4)
+    pl2 = Player("Bob", 2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
+        with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
+            game = PigGameTest()
+
+    assert game._PigGame__order_players(None) == None
