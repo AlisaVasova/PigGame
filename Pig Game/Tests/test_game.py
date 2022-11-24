@@ -159,7 +159,7 @@ def test_game_players_with_1():
 
 def test_game_init_intgr():
     with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
-         with patch('random.randint', side_effect=[4, 2]):
+         with patch('__main__.random.randint', autospec=True, side_effect=[4, 2]):
             game = PigGame()
 
     assert game.win_score == 20
