@@ -78,7 +78,7 @@ def test_order_players():
     pl2 = Player("Bob", 2)
     with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
         with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
-            game = PigGameTest()
+            game = PigGame()
 
     assert game._PigGame__order_players([pl1,pl2]) == [pl2, pl1]
 
@@ -87,7 +87,7 @@ def test_order_players_negativ():
     pl2 = Player("Bob", 2)
     with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
         with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
-            game = PigGameTest()
+            game = PigGame()
 
     assert game._PigGame__order_players(None) == None
 
@@ -96,7 +96,7 @@ def test_hold_turn():
     pl2 = Player("Bob", 2)
     with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
         with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
-            game = PigGameTest()
+            game = PigGame()
 
     with MockInputFunction(side_effect=["1", "", "a", "y"]):
         assert game._PigGame__hold_turn() == "y"
@@ -106,7 +106,7 @@ def test_game_players():
     pl2 = Player("Bob", 2)
     with patch('game.PigGame._PigGame__ask_win_score', side_effect=[10]):
         with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
-            game = PigGameTest()
+            game = PigGame()
 
     with patch('dice.Dice.roll_die', side_effect=[2, 2, 5, 6]):
             with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "y", "y"]):
@@ -120,7 +120,7 @@ def test_game_play_with_computer():
     pl2 = AIPlayer(2)
     with patch('game.PigGame._PigGame__ask_win_score', side_effect=[20]):
         with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
-            game = PigGameTest()
+            game = PigGame()
 
     with patch('dice.Dice.roll_die', side_effect=[3, 4, 6, 5, 5, 5, 5]):
         with patch('player.AIPlayer.roll_again', side_effect=["n", "y"]):
