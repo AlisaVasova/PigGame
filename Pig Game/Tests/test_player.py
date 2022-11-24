@@ -61,6 +61,6 @@ def test_roll_again_aggr1():
     roll_counter = 3
     win_score = 30
     
-    with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[True]) as __more_than_win_score:
+    with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]) as __more_than_win_score:
         with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
             assert computer.roll_again(turn_score, roll_counter, win_score) == True
