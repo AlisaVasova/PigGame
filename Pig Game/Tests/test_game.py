@@ -54,11 +54,11 @@ def test_ask_win_score_negativ():
 
 def test_players_number():
     with MockInputFunction(side_effect=["2"]):
-        assert PigGame._PigGame__ask_win_score() == 2
+        assert PigGame._PigGame__num_players() == 2
 
 def test_players_number_negativ():
     with MockInputFunction(side_effect=["a", "", "0", "2"]):
-        assert PigGame._PigGame__ask_win_score() == 2
+        assert PigGame._PigGame__num_players() == 2
 
 def test_make_players():
     pl1 = Player("Alice", 4)
@@ -70,6 +70,19 @@ def test_make_players():
     with patch('game.PigGame._PigGame__num_players', side_effect=[2]):
         with patch('dice.Dice.roll_die', side_effect=[4, 2]):
             with MockInputFunction(side_effect=["Alice", "Bob"]):
+                with patch('game.PigGame._PigGame__order_players', side_effect=[[pl2, pl1]]):
+                    assert game.public_make_players() == [pl2, pl1]
+
+def test_make_players_one_player():
+    pl1 = Player("Alice", 4)
+    pl2 = AIPlayer(2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
+        with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
+            game = PigGameTest()
+
+    with patch('game.PigGame._PigGame__num_players', side_effect=[1]):
+        with patch('dice.Dice.roll_die', side_effect=[4, 2]):
+            with MockInputFunction(side_effect=["Alice"]):
                 with patch('game.PigGame._PigGame__order_players', side_effect=[[pl2, pl1]]):
                     assert game.public_make_players() == [pl2, pl1]
 
@@ -127,3 +140,17 @@ def test_game_play_with_computer():
                 winner, score = game.run_game()
                 assert winner == "computer"
                 assert score == 23
+
+
+def test_game_players_with_1():
+    pl1 = Player("Alice", 4)
+    pl2 = Player("Bob", 2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[10]):
+        with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
+            game = PigGame()
+
+    with patch('dice.Dice.roll_die', side_effect=[2, 2, 5, 1, 6]):
+        with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "y", "y"]):
+            winner, score = game.run_game()
+            assert winner == "Alice"
+            assert score == 10
