@@ -125,3 +125,12 @@ def test_more_than_win_score_negative():
     add_score = None
     win_score = ""
     assert computer._AIPlayer__more_than_win_score(add_score, win_score) == None
+
+def test_roll_again_intgr():
+    computer = AIPlayer()
+    computer.score = 23
+    turn_score = 12
+    roll_counter = 2
+    win_score = 30
+    
+    assert computer.roll_again(turn_score, roll_counter, win_score) == False
