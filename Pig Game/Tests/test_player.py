@@ -13,9 +13,9 @@ def test_player_init():
 
 def test_player_init_negativ():
     player1 = Player(None, None)
-    assert player1.name == ""
+    assert player1.name == None
     assert player1.order == None
-    assert player1.score == None
+    assert player1.score == 0
 
 def test_counter():
     player1 = Player(None, None)
