@@ -4,7 +4,8 @@ from unittest.mock import call
 from unittest.mock import patch
 
 class PigGameTest(PigGame):
-    def public_make_players():
+
+    def public_make_players(self):
         return self._make_players
 
 class MockInputFunction:
