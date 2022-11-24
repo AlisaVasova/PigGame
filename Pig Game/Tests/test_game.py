@@ -157,10 +157,11 @@ def test_game_players_with_1():
             assert winner == "Alice"
             assert score == 10
 
-def test_game_init_intgr():
+@patch('random.randint')
+def test_game_init_intgr(mock):
+    mock.side_effect=[4, 2]
     with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
-         with patch('__builtin__.random.randint', side_effect=[4, 2]):
-            game = PigGame()
+        game = PigGame()
 
     assert game.win_score == 20
     assert game.player_list[0].name == "Bob" and game.player_list[0].order == 2 and game.player_list[1].name == "Alice" and game.player_list[1].order == 4
