@@ -10,29 +10,33 @@ class PigGame:
         self.win_score = self.__ask_win_score()
         self.__turn_score = 0
         self.__die = Dice()
-        self.__player_list = self.__make_players()
+        self.__player_list = self._make_players()
         self.__roll_counter = 0
 
     def __ask_win_score(self):
-        num = input("Введите количество очков, необходимое для выигрыша: ")
+        print("Введите количество очков, необходимое для выигрыша: ", end='')
+        num = input()
         return int(num)
 
     def __num_players(self):
-        num = input("Введите количество игроков: ")
+        print("Введите количество игроков: ", end='')
+        num = input()
         return int(num)
 
-    def __make_players(self):
+    def _make_players(self):
         player_list = []
         players = self.__num_players()
         if players >= 2:
             for i in range(0, players):
-                names = input("Введите имя игрока {}: ".format(i + 1))
+                print("Введите имя игрока {}: ".format(i + 1), end='')
+                names = input()
                 self.__die.roll_die()
                 player_person = Player((names), self.__die.num_roll)
                 player_list.append(player_person)
         else:
             # set game for the computer
-            names = input("Введите имя игрока: ")
+            print("Введите имя игрока: ", end='')
+            names = input()
             self.__die.roll_die()
             player_person = Player((names), self.__die.num_roll)
             player_list.append(player_person)
@@ -40,8 +44,11 @@ class PigGame:
             computer = AIPlayer(self.__die.num_roll)
             player_list.append(computer)
         player_list = self.__order_players(player_list)
+        print("Порядок хода:")
+        j = 0
         for i in player_list:
-            print(i.name)
+            j += 1
+            print(str(j) + ". " + i.name)
         return player_list
 
     def __order_players(self, player_list):
@@ -51,7 +58,8 @@ class PigGame:
         """asks if the player would like to hold"""
         ask_again = True
         while ask_again is True:
-            decision = input("Хотите забрать очки? (y/n): ")
+            print("Хотите забрать очки? (y/n): ", end='')
+            decision = input()
             if decision == 'y' or decision == 'n':
                 ask_again = False
         return decision
@@ -64,20 +72,18 @@ class PigGame:
                 self.__roll_counter = 0
                 self.__turn_score = 0
                 while turn == 'n':
-                    self.seperation_bar()
+                    self.seperation_bar()       
+                    print("Ход игрока " + i.name)
                     self.__die.roll_die()
                     num = self.__die.num_roll
                     print(i.name + " выбрасывает: " + str(num))
                     self.__roll_counter += 1
                     print(
-                        "Общее количество очков игрока "
-                        + i.name
-                        + " равно "
+                        "Общее количество очков: "
                         + str(i.score)
                     )
                     print(
-                        i.name
-                        + " сделала ходов: "
+                        "Сделано ходов: "
                         + str(self.__roll_counter)
                     )
                     if num != 1:
@@ -85,18 +91,12 @@ class PigGame:
                         self.__turn_score += num
                         # print turn score
                         print(
-                            i.name
-                            + " может забрать очков: "
+                            "Можно забрать очков: "
                             + str(self.__turn_score)
                         )
                     else:
                         self.__turn_score = 0
-                        print(
-                            i.name
-                            + " может забрать очков: "
-                            + str(self.__turn_score)
-                        )
-                        print(i.name + " теряет очки!")
+                        print(i.name + "Вы теряете набранные очки!")
                         time.sleep(1)
                         break
                     time.sleep(1)

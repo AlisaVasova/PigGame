@@ -5,20 +5,22 @@ class Player:
     def __init__(self, name, order):
         self.name = name
         self.order = order
-        print(self.name + " присоединяется к игре и получает: " + str(self.order))
+        if self.name and self.order:
+            print(self.name + " присоединяется к игре и получает: " + str(self.order))
         self.score = 0
 
     def point_counter(self, points):
-        self.score += points
-
+        try:
+            self.score += int(points)
+        except ValueError:
+            pass
+            
 
 class AIPlayer(Player):
 
     def __init__(self, order=None):
-        self.ai_name = 'droid56'
         self.aggressiveness = randint(1, 3)
-        if order is not None:
-            super().__init__(self.ai_name, order)
+        super().__init__('computer', order)
 
     def roll_again(self, turn_score, roll_counter, win_score):
         decision = True
