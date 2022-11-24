@@ -169,6 +169,17 @@ def test_game_init_intgr():
     assert game.roll_counter == 0
     assert game.turn_score == 0
 
+def test_game_with_computer_init_intgr():
+    with MockInputFunction(side_effect=["20", "1", "Alice"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+            game = PigGame()
+
+    assert game.win_score == 20
+    assert game.player_list[0].name == "computer" and game.player_list[0].order == 2 and game.player_list[1].name == "Alice" and game.player_list[1].order == 4
+    assert hasattr(game, 'die')
+    assert game.roll_counter == 0
+    assert game.turn_score == 0
+
 def test_make_players_intgr():
     with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
          with patch('dice.randint', side_effect=[4, 2]):
@@ -178,6 +189,16 @@ def test_make_players_intgr():
          with patch('dice.randint', side_effect=[4, 2]):
              players = game.public_make_players()
              assert players[0].name == "Bob" and players[0].order == 2 and players[1].name == "Alice" and players[1].order == 4
+
+def test_make_players_with_computer_intgr():
+    with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+            game = PigGameTest()
+
+    with MockInputFunction(side_effect=["1", "Alice"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+             players = game.public_make_players()
+             assert players[0].name == "computer" and players[0].order == 2 and players[1].name == "Alice" and players[1].order == 4
 
 def test_game_players_ingr():
     with MockInputFunction(side_effect=["10", "2", "Alice", "Bob"]):
