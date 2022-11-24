@@ -50,7 +50,6 @@ def test_roll_again_more_than_win_score():
     win_score = 30
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[True]):
-        with patch('player.Player.point_counter', side_effect=[35]):
             assert computer.roll_again(turn_score, roll_counter, win_score) == False
 
 def test_roll_again_aggr1():
@@ -62,7 +61,6 @@ def test_roll_again_aggr1():
     win_score = 30
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]):
-        with patch('player.Player.point_counter', side_effect=[15]):
             assert computer.roll_again(turn_score, roll_counter, win_score) == True
 
 def test_roll_again_aggr2():
@@ -74,7 +72,6 @@ def test_roll_again_aggr2():
     win_score = 30
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]):
-        with patch('player.Player.point_counter', side_effect=[19]):
             assert computer.roll_again(turn_score, roll_counter, win_score) == True
 
 def test_roll_again_aggr3():
@@ -86,7 +83,6 @@ def test_roll_again_aggr3():
     win_score = 30
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]):
-        with patch('player.Player.point_counter', side_effect=[25]):
             assert computer.roll_again(turn_score, roll_counter, win_score) == True
 
 def test_roll_again_big_score():
@@ -97,7 +93,6 @@ def test_roll_again_big_score():
     win_score = 30
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]):
-        with patch('player.Player.point_counter', side_effect=[27]):
             assert computer.roll_again(turn_score, roll_counter, win_score) == False
 
 def test_roll_again_negativ():
@@ -108,7 +103,6 @@ def test_roll_again_negativ():
     win_score = None
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]):
-        with patch('player.Player.point_counter', side_effect=[34]):
             assert computer.roll_again(turn_score, roll_counter, win_score) == None
 
 def test_more_than_win_score_is():

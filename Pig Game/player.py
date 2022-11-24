@@ -25,7 +25,6 @@ class AIPlayer(Player):
     def roll_again(self, turn_score, roll_counter, win_score):
         if isinstance(turn_score, int) and isinstance(roll_counter, int) and isinstance(win_score, int):
             if self.__more_than_win_score(turn_score, win_score):
-                self.point_counter(turn_score)
                 return False
             if self.aggressiveness == 1:
                 if turn_score <= 12:
@@ -36,7 +35,6 @@ class AIPlayer(Player):
             if self.aggressiveness == 3:
                 if (turn_score <= 20) and (roll_counter <= 5):
                     return True
-            self.point_counter(turn_score)
             return False
         return None
 

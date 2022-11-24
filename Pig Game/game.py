@@ -103,6 +103,7 @@ class PigGame:
                         ans = i.roll_again(self.turn_score, self.roll_counter, self.win_score)
                         if ans is False:
                             turn = 'y'
+                            i.point_counter(self.turn_score)
                             player_score = i.score
                     else:
                         turn = self.__hold_turn()
@@ -117,6 +118,7 @@ class PigGame:
         print('*************************************')
         print("Победителем становится " + winner_name + " с числом очков: " + str(player_score))
         print('*************************************')
+        return winner_name, player_score
 
     def seperation_bar(self):
         """creates a seperation line for visualization"""

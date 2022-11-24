@@ -1,5 +1,6 @@
 from game import PigGame
 from player import Player
+from player import AIPlayer
 from unittest.mock import call
 from unittest.mock import patch
 
@@ -100,3 +101,31 @@ def test_hold_turn():
     with MockInputFunction(side_effect=["1", "", "a", "y"]):
         assert game._PigGame__hold_turn() == "y"
 
+def test_game_players():
+    pl1 = Player("Alice", 4)
+    pl2 = Player("Bob", 2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[10]):
+        with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
+            game = PigGameTest()
+
+    with patch('dice.Dice.roll_die', side_effect=[2, 2, 5, 6]):
+            with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "y", "y"]):
+                with patch('player.Player.point_counter', side_effect=[4, 5, 10]):
+                    winner, score = game.run_game()
+                    assert winner == "Bob"
+                    assert score == 10
+
+def test_game_play_with_computer():
+    pl1 = Player("Alice", 4)
+    pl2 = AIPlayer(2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[20]):
+        with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
+            game = PigGameTest()
+
+    with patch('dice.Dice.roll_die', side_effect=[3, 4, 6, 5, 5, 5, 5]):
+        with patch('player.AIPlayer.roll_again', side_effect=["n", "y"]):
+            with patch('game.PigGame._PigGame__hold_turn', side_effect=[True, True, False, True, False]):
+                with patch('player.Player.point_counter', side_effect=[13, 10, 23]):
+                    winner, score = game.run_game()
+                    assert winner == "computer"
+                    assert score == 23
