@@ -42,13 +42,25 @@ def test_aiplyer_init_with_no_order():
     assert computer.score == 0
     assert computer.aggressiveness <=3 and computer.aggressiveness >=1
 
-def test_roll_again():
+def test_roll_again_more_than_win_score():
     computer = AIPlayer()
-    computer.aggressiveness = 2
     computer.score = 23
-    turn_score = 11
+    turn_score = 12
     roll_counter = 2
     win_score = 30
     
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[True]) as __more_than_win_score:
-        assert computer.roll_again(turn_score, roll_counter, win_score) == False
+        with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
+            assert computer.roll_again(turn_score, roll_counter, win_score) == False
+
+def test_roll_again_aggr1():
+    computer = AIPlayer()
+    computer.aggressiveness = 1
+    computer.score = 23
+    turn_score = 10
+    roll_counter = 3
+    win_score = 30
+    
+    with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[True]) as __more_than_win_score:
+        with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
+            assert computer.roll_again(turn_score, roll_counter, win_score) == True
