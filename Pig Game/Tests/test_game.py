@@ -15,6 +15,6 @@ def test_game_init():
 
     assert game.win_score == 2
     assert game.player_list == [pl1,pl2]
-    assert hasattr(game, die)
+    assert hasattr(game, 'die')
     assert game.roll_counter == 0
     assert game.turn_score == 0
