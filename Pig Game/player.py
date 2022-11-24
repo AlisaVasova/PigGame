@@ -41,7 +41,9 @@ class AIPlayer(Player):
         return None
 
     def __more_than_win_score(self, add_score, win_score):
-        if (self.score + add_score) >= win_score:
-            return True
-        else:
-            return False
+        if isinstance(add_score, int) and isinstance(win_score, int):
+            if (self.score + add_score) >= win_score:
+                return True
+            else:
+                return False
+        return None

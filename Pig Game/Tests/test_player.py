@@ -110,3 +110,24 @@ def test_roll_again_negativ():
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]) as __more_than_win_score:
         with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
             assert computer.roll_again(turn_score, roll_counter, win_score) == None
+
+def test_more_than_win_score_is():
+    computer = AIPlayer()
+    computer.score = 89
+    add_score = 12
+    win_score = 100
+    assert computer._AIPlayer__more_than_win_score(add_score, win_score) == True
+
+def test_more_than_win_score_is_not():
+    computer = AIPlayer()
+    computer.score = 89
+    add_score = 6
+    win_score = 100
+    assert computer._AIPlayer__more_than_win_score(add_score, win_score) == False
+
+def test_more_than_win_score_negative():
+    computer = AIPlayer()
+    computer.score = 89
+    add_score = None
+    win_score = ""
+    assert computer._AIPlayer__more_than_win_score(add_score, win_score) == None
