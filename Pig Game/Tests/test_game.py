@@ -89,3 +89,13 @@ def test_order_players_negativ():
             game = PigGameTest()
 
     assert game._PigGame__order_players(None) == None
+
+def test_hold_turn():
+    pl1 = Player("Alice", 4)
+    pl2 = Player("Bob", 2)
+    with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
+        with patch('game.PigGame._make_players', side_effect=[[pl1,pl2]]):
+            game = PigGameTest()
+
+    with MockInputFunction(side_effect=["1", "", "a", "y"]):
+        assert game._PigGame__hold_turn() == "y"

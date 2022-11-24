@@ -2,7 +2,7 @@ from dice import Dice
 
 def test_init_dice():
     die = Dice()
-    assert die.num_roll == 0
+    assert die.__num_roll == 0
 
 def test_roll_die():
     die = Dice()
