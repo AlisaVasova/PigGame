@@ -88,29 +88,17 @@ class PigGame:
                     num = self.die.roll_die()
                     print(i.name + " выбрасывает: " + str(num))
                     self.roll_counter += 1
-                    print(
-                        "Общее количество очков: "
-                        + str(i.score)
-                    )
-                    print(
-                        "Сделано ходов: "
-                        + str(self.roll_counter)
-                    )
+                    print("Общее количество очков: " + str(i.score))
+                    print("Сделано ходов: " + str(self.roll_counter))
                     if num != 1:
-                        # gets total points of the turn
                         self.turn_score += num
-                        # print turn score
-                        print(
-                            "Можно забрать очков: "
-                            + str(self.turn_score)
-                        )
+                        print("Можно забрать очков: " + str(self.turn_score))
                     else:
                         self.turn_score = 0
                         print("Вы теряете набранные очки!")
                         time.sleep(1)
                         break
                     time.sleep(1)
-                    # Choosing to roll or hold
                     if isinstance(i, AIPlayer):
                         ans = i.roll_again(self.turn_score, self.roll_counter, self.win_score)
                         if ans is False:
