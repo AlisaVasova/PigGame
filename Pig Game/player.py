@@ -23,21 +23,22 @@ class AIPlayer(Player):
         super().__init__('computer', order)
 
     def roll_again(self, turn_score, roll_counter, win_score):
-        decision = True
-        if self.__more_than_win_score(turn_score, win_score):
+        if isinstance(turn_score, int) and isinstance(roll_counter, int) and isinstance(win_score, int):
+            if self.__more_than_win_score(turn_score, win_score):
+                self.point_counter(turn_score)
+                return False
+            if self.aggressiveness == 1:
+                if turn_score <= 12:
+                    return True      
+            if self.aggressiveness == 2:
+                if (turn_score <= 16) and (roll_counter <= 3):
+                    return True
+            if self.aggressiveness == 3:
+                if (turn_score <= 20) and (roll_counter <= 5):
+                    return True
             self.point_counter(turn_score)
             return False
-        if self.aggressiveness == 1:
-            if turn_score <= 12:
-                return True      
-        if self.aggressiveness == 2:
-            if (turn_score <= 16) and (roll_counter <= 3):
-                return True
-        if self.aggressiveness == 3:
-            if (turn_score <= 20) and (roll_counter <= 5):
-                return True
-        self.point_counter(turn_score)
-        return False
+        return None
 
     def __more_than_win_score(self, add_score, win_score):
         if (self.score + add_score) >= win_score:
