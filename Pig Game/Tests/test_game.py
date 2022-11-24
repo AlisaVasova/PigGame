@@ -168,3 +168,23 @@ def test_game_init_intgr():
     assert hasattr(game, 'die')
     assert game.roll_counter == 0
     assert game.turn_score == 0
+
+def test_make_players_intgr():
+    with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+            game = PigGameTest()
+
+    with MockInputFunction(side_effect=["2", "Alice", "Bob"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+             assert game.public_make_players() == [pl2, pl1]
+
+def test_game_players_ingr():
+    with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+            game = PigGameTest()
+
+    with patch('dice.randint', side_effect=[2, 2, 5, 6]):
+        with MockInputFunction(side_effect=["n", "y", "y", "y"]):
+            winner, score = game.run_game()
+            assert winner == "Bob"
+            assert score == 10
