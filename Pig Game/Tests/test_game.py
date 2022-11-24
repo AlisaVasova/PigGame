@@ -161,7 +161,7 @@ def test_game_init_intgr():
             game = PigGame()
 
     assert game.win_score == 20
-    assert game.player_list == [Player("Bob", 2),Player("Alice", 4)]
+    assert game.player_list[0].name == "Bob" and game.player_list[0].order == 2 and game.player_list[1].name == "Alice" and game.player_list[1].order == 4
     assert hasattr(game, 'die')
     assert game.roll_counter == 0
     assert game.turn_score == 0
