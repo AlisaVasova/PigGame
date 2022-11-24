@@ -56,7 +56,7 @@ def test_roll_again_more_than_win_score():
 def test_roll_again_aggr1():
     computer = AIPlayer()
     computer.aggressiveness = 1
-    computer.score = 23
+    computer.score = 5
     turn_score = 10
     roll_counter = 3
     win_score = 30
@@ -64,3 +64,38 @@ def test_roll_again_aggr1():
     with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]) as __more_than_win_score:
         with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
             assert computer.roll_again(turn_score, roll_counter, win_score) == True
+
+def test_roll_again_aggr2():
+    computer = AIPlayer()
+    computer.aggressiveness = 2
+    computer.score = 5
+    turn_score = 14
+    roll_counter = 3
+    win_score = 30
+    
+    with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]) as __more_than_win_score:
+        with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
+            assert computer.roll_again(turn_score, roll_counter, win_score) == True
+
+def test_roll_again_aggr3():
+    computer = AIPlayer()
+    computer.aggressiveness = 3
+    computer.score = 5
+    turn_score = 20
+    roll_counter = 4
+    win_score = 30
+    
+    with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]) as __more_than_win_score:
+        with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
+            assert computer.roll_again(turn_score, roll_counter, win_score) == True
+
+def test_roll_again_big_score():
+    computer = AIPlayer()
+    computer.score = 5
+    turn_score = 22
+    roll_counter = 5
+    win_score = 30
+    
+    with patch('player.AIPlayer._AIPlayer__more_than_win_score', side_effect=[False]) as __more_than_win_score:
+        with patch('player.Player.point_counter', side_effect=[34]) as point_counter:
+            assert computer.roll_again(turn_score, roll_counter, win_score) == False
