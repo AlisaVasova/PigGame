@@ -3,6 +3,7 @@ from player import Player
 from player import AIPlayer
 from unittest.mock import call
 from unittest.mock import patch
+import random
 
 class PigGameTest(PigGame):
 
@@ -61,7 +62,7 @@ def test_players_number_negativ():
         assert PigGame._PigGame__num_players() == 2
 
 @patch('player.Player')
-def test_make_players():
+def test_make_players(MockClass):
     pl1 = Player("Alice", 4)
     pl2 = Player("Bob", 2)
     with patch('game.PigGame._PigGame__ask_win_score', side_effect=[2]):
@@ -156,3 +157,13 @@ def test_game_players_with_1():
             assert winner == "Alice"
             assert score == 10
 
+def test_game_init_intgr():
+    with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
+         with patch('random.randint', side_effect=[4, 2]):
+            game = PigGame()
+
+    assert game.win_score == 20
+    assert game.player_list[0].name == "Bob" and game.player_list[0].order == 2 and game.player_list[1].name == "Alice" and game.player_list[1].order == 4
+    assert hasattr(game, 'die')
+    assert game.roll_counter == 0
+    assert game.turn_score == 0
