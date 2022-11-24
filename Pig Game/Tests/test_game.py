@@ -99,3 +99,4 @@ def test_hold_turn():
 
     with MockInputFunction(side_effect=["1", "", "a", "y"]):
         assert game._PigGame__hold_turn() == "y"
+
