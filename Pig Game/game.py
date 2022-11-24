@@ -12,10 +12,14 @@ class PigGame:
         self.player_list = self._make_players()
         self.roll_counter = 0
 
-    def __ask_win_score():
-        print("Введите количество очков, необходимое для выигрыша: ", end='')
-        num = input()
-        return int(num)
+    def __ask_win_score():        
+        while True:
+            print("Введите количество очков, необходимое для выигрыша: ", end='')
+            num = input()
+            try:
+                return int(num)
+            except ValueError:
+                print("Ошибка ввода. Попробуйте еще раз.")
 
     def __num_players():
         print("Введите количество игроков: ", end='')

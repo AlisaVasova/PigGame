@@ -44,3 +44,7 @@ def test_game_init():
 def test_ask_win_score():
     with MockInputFunction(side_effect=["2"]):
         assert PigGame._PigGame__ask_win_score() == 2
+
+def test_ask_win_score_negativ():
+    with MockInputFunction(side_effect=["a", "", "2"]):
+        assert PigGame._PigGame__ask_win_score() == 2
