@@ -180,7 +180,7 @@ def test_make_players_intgr():
              assert players[0].name == "Bob" and players[0].order == 2 and players[1].name == "Alice" and players[1].order == 4
 
 def test_game_players_ingr():
-    with MockInputFunction(side_effect=["20", "2", "Alice", "Bob"]):
+    with MockInputFunction(side_effect=["10", "2", "Alice", "Bob"]):
          with patch('dice.randint', side_effect=[4, 2]):
             game = PigGameTest()
 
