@@ -7,9 +7,9 @@ class PigGame:
 
     def __init__(self):
         self.win_score = PigGame._PigGame__ask_win_score()
-        self.turn_score = 0
         self.die = Dice()
         self.player_list = self._make_players()
+        self.turn_score = 0
         self.roll_counter = 0
 
     def __ask_win_score():        
@@ -17,34 +17,40 @@ class PigGame:
             print("Введите количество очков, необходимое для выигрыша: ", end='')
             num = input()
             try:
-                return int(num)
+                if int(num) > 0:
+                    return int(num)
+                else:
+                    print("Ошибка ввода. Попробуйте еще раз.")
             except ValueError:
                 print("Ошибка ввода. Попробуйте еще раз.")
 
     def __num_players():
-        print("Введите количество игроков: ", end='')
-        num = input()
-        return int(num)
+        while True:
+            print("Введите количество игроков: ", end='')
+            num = input()
+            try:
+                if int(num) > 0:
+                    return int(num)
+                else:
+                    print("Ошибка ввода. Попробуйте еще раз.")
+            except ValueError:
+                print("Ошибка ввода. Попробуйте еще раз.")
 
     def _make_players(self):
         player_list = []
-        players = PigGame.PigGame._PigGame__num_players()
+        players = PigGame._PigGame__num_players()
         if players >= 2:
             for i in range(0, players):
                 print("Введите имя игрока {}: ".format(i + 1), end='')
                 names = input()
-                self.die.roll_die()
-                player_person = Player((names), self.die.num_roll)
+                player_person = Player((names), self.die.roll_die())
                 player_list.append(player_person)
         else:
-            # set game for the computer
             print("Введите имя игрока: ", end='')
             names = input()
-            self.die.roll_die()
-            player_person = Player((names), self.die.num_roll)
+            player_person = Player((names), self.die.roll_die())
             player_list.append(player_person)
-            self.die.roll_die()
-            computer = AIPlayer(self.die.num_roll)
+            computer = AIPlayer(self.die.roll_die())
             player_list.append(computer)
         player_list = self.__order_players(player_list)
         print("Порядок хода:")
@@ -77,8 +83,7 @@ class PigGame:
                 while turn == 'n':
                     self.seperation_bar()       
                     print("Ход игрока " + i.name)
-                    self.die.roll_die()
-                    num = self.die.num_roll
+                    num = self.die.roll_die()
                     print(i.name + " выбрасывает: " + str(num))
                     self.roll_counter += 1
                     print(
@@ -99,7 +104,7 @@ class PigGame:
                         )
                     else:
                         self.turn_score = 0
-                        print(i.name + "Вы теряете набранные очки!")
+                        print("Вы теряете набранные очки!")
                         time.sleep(1)
                         break
                     time.sleep(1)
