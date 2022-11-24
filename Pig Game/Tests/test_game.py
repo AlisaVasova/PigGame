@@ -6,7 +6,7 @@ from unittest.mock import patch
 class PigGameTest(PigGame):
 
     def public_make_players(self):
-        return self._make_players
+        return self._make_players()
 
 class MockInputFunction:
     def __init__(self, return_value=None, side_effect=None):

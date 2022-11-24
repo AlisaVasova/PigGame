@@ -7,4 +7,4 @@ def test_init_dice():
 def test_roll_die():
     die = Dice()
     die.roll_die()
-    assert die.num_roll <=6 and die.num_roll >=1
+    assert die.__num_roll <=6 and die.__num_roll >=1
