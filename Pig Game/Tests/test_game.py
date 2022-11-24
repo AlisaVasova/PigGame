@@ -122,8 +122,8 @@ def test_game_play_with_computer():
             game = PigGame()
 
     with patch('dice.Dice.roll_die', side_effect=[3, 4, 6, 5, 5, 5, 5]):
-        with patch('player.AIPlayer.roll_again', side_effect=["n", "y"]):
-            with patch('game.PigGame._PigGame__hold_turn', side_effect=[True, True, False, True, False]):
+        with patch('player.AIPlayer.roll_again', side_effect=[True, True, False, True, False]):
+            with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y"]):
                 winner, score = game.run_game()
                 assert winner == "computer"
                 assert score == 23
