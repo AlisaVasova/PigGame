@@ -6,25 +6,25 @@ from player import AIPlayer
 class PigGame:
 
     def __init__(self):
-        self.win_score = self.__ask_win_score()
+        self.win_score = PigGame._PigGame__ask_win_score()
         self.turn_score = 0
         self.die = Dice()
         self.player_list = self._make_players()
         self.roll_counter = 0
 
-    def __ask_win_score(self):
+    def __ask_win_score():
         print("Введите количество очков, необходимое для выигрыша: ", end='')
         num = input()
         return int(num)
 
-    def __num_players(self):
+    def __num_players():
         print("Введите количество игроков: ", end='')
         num = input()
         return int(num)
 
     def _make_players(self):
         player_list = []
-        players = self.__num_players()
+        players = PigGame.PigGame._PigGame__num_players()
         if players >= 2:
             for i in range(0, players):
                 print("Введите имя игрока {}: ".format(i + 1), end='')
