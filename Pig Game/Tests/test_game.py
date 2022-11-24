@@ -108,12 +108,11 @@ def test_game_players():
         with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
             game = PigGame()
 
-    with patch('dice.Dice.roll_die', side_effect=[2, 2, 5, 6, 3, 3]):
-            with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "y", "y"]):
-                with patch('player.Player.point_counter', side_effect=[4, 5, 10]):
-                    winner, score = game.run_game()
-                    assert winner == "Bob"
-                    assert score == 10
+    with patch('dice.Dice.roll_die', side_effect=[2, 2, 5, 6]):
+        with patch('game.PigGame._PigGame__hold_turn', side_effect=["n", "y", "y", "y"]):
+            winner, score = game.run_game()
+            assert winner == "Bob"
+            assert score == 10
 
 def test_game_play_with_computer():
     pl1 = Player("Alice", 4)
@@ -122,10 +121,9 @@ def test_game_play_with_computer():
         with patch('game.PigGame._make_players', side_effect=[[pl2,pl1]]):
             game = PigGame()
 
-    with patch('dice.Dice.roll_die', side_effect=[3, 4, 6, 5, 5, 5, 5, 3, 3]):
+    with patch('dice.Dice.roll_die', side_effect=[3, 4, 6, 5, 5, 5, 5]):
         with patch('player.AIPlayer.roll_again', side_effect=["n", "y"]):
             with patch('game.PigGame._PigGame__hold_turn', side_effect=[True, True, False, True, False]):
-                with patch('player.Player.point_counter', side_effect=[13, 10, 23]):
-                    winner, score = game.run_game()
-                    assert winner == "computer"
-                    assert score == 23
+                winner, score = game.run_game()
+                assert winner == "computer"
+                assert score == 23
