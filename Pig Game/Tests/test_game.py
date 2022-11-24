@@ -189,3 +189,15 @@ def test_game_players_ingr():
             winner, score = game.run_game()
             assert winner == "Bob"
             assert score == 10
+
+def test_game_play_with_computer_intgr():
+    with MockInputFunction(side_effect=["20", "1", "Alice"]):
+         with patch('dice.randint', side_effect=[4, 2]):
+             with patch('player.randint', side_effect=[1]):
+                game = PigGameTest()
+
+    with patch('dice.randint', side_effect=[3, 4, 6, 5, 5, 5, 5]):
+        with MockInputFunction(side_effect=["n", "y"]):
+                winner, score = game.run_game()
+                assert winner == "computer"
+                assert score == 23
