@@ -12,6 +12,7 @@ class PigGame:
         self.turn_score = 0
         self.roll_counter = 0
 
+    @staticmethod
     def __ask_win_score():        
         while True:
             print("Введите количество очков, необходимое для выигрыша: ", end='')
@@ -24,6 +25,7 @@ class PigGame:
             except ValueError:
                 print("Ошибка ввода. Попробуйте еще раз.")
 
+    @staticmethod
     def __num_players():
         while True:
             print("Введите количество игроков: ", end='')
