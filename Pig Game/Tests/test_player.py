@@ -27,7 +27,7 @@ def test_counter_negativ():
     player1.point_counter("a")
     assert player1.score == 0
 
-def test_aiplyer_init_with_order():
+def test_aiplayer_init_with_order():
     order = 3
     computer = AIPlayer(order)
     assert computer.name == 'computer'
@@ -35,7 +35,7 @@ def test_aiplyer_init_with_order():
     assert computer.score == 0
     assert computer.aggressiveness <=3 and computer.aggressiveness >=1
 
-def test_aiplyer_init_with_no_order():
+def test_aiplayer_init_with_no_order():
     computer = AIPlayer()
     assert computer.name == 'computer'
     assert computer.order == None
